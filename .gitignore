@@ -3,9 +3,6 @@
 *.lo
 *.o
 *.obj
-*.dep
-*.res
-*.resources
 
 # Precompiled Headers
 *.gch
@@ -29,3 +26,6 @@
 *.exe
 *.out
 *.app
+
+#Build
+/build
