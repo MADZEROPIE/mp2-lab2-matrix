@@ -55,20 +55,23 @@ TEST(TVector, can_get_start_index)
 
 TEST(TVector, can_set_and_get_element)
 {
-  TVector<int> v(4);
+  TVector<int> v(4),m(7);
   v[0] = 4;
-
+ // v = m;
   EXPECT_EQ(4, v[0]);
 }
 
 TEST(TVector, throws_when_set_element_with_negative_index)
 {
-  ADD_FAILURE();
+	TVector<int> v(4);
+	ASSERT_ANY_THROW(v[-1]= 4);
 }
 
 TEST(TVector, throws_when_set_element_with_too_large_index)
 {
-  ADD_FAILURE();
+	TVector<int> v(4);
+	ASSERT_ANY_THROW(v[5] = 4);
+
 }
 
 TEST(TVector, can_assign_vector_to_itself)
@@ -78,17 +81,26 @@ TEST(TVector, can_assign_vector_to_itself)
 
 TEST(TVector, can_assign_vectors_of_equal_size)
 {
-  ADD_FAILURE();
+	TVector<int> v(4),m(4);
+	v = m;
+	EXPECT_EQ(v, m);
+	//ADD_FAILURE();
 }
 
 TEST(TVector, assign_operator_change_vector_size)
 {
-  ADD_FAILURE();
+	TVector<int> v(4), m(7);
+	v = m;
+	EXPECT_EQ(7, v.GetSize());
+	//ADD_FAILURE();
 }
 
 TEST(TVector, can_assign_vectors_of_different_size)
 {
-  ADD_FAILURE();
+	//TVector<int> v(4), m(8);
+	//v = m;
+	//EXPECT_EQ(v, m);
+	ADD_FAILURE();
 }
 
 TEST(TVector, compare_equal_vectors_return_true)
