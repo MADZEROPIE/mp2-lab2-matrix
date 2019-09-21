@@ -5,19 +5,19 @@
 TEST(TMatrix, can_create_matrix_with_positive_length)
 {
 	ASSERT_NO_THROW(TMatrix<int> m(5));
-	ADD_FAILURE();
+	//ADD_FAILURE();
 }
 
 TEST(TMatrix, cant_create_too_large_matrix)
 {
 	ASSERT_ANY_THROW(TMatrix<int> m(MAX_MATRIX_SIZE + 1));
-	ADD_FAILURE();
+	//ADD_FAILURE();
 }
 
 TEST(TMatrix, throws_when_create_matrix_with_negative_length)
 {
 	ASSERT_ANY_THROW(TMatrix<int> m(-5));
-	ADD_FAILURE();
+	//ADD_FAILURE();
 }
 
 TEST(TMatrix, can_create_copied_matrix)
@@ -25,21 +25,27 @@ TEST(TMatrix, can_create_copied_matrix)
 	TMatrix<int> m(5);
 
 	ASSERT_NO_THROW(TMatrix<int> m1(m));
-	ADD_FAILURE();
+	//ADD_FAILURE();
 }
 
 TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 {
-	//TMatrix<int> m1(5);
-	//TMatrix<int> m2(m1);
-	//EXPECT_EQ(m1, m2);
-	//EXPECT_EQ(1, m1 == m2);
-	ADD_FAILURE();
+	TMatrix<int> m1(5);
+	TMatrix<int> m2(m1);
+	EXPECT_EQ(m1, m2);
+	//ADD_FAILURE();
 }
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
-	ADD_FAILURE();
+	TMatrix<int> m1(5);
+	TMatrix<int> m2(m1);
+	m1[0][0] = 5;
+	m1[2][1] = 3;
+	m2[0][0] = 4;
+	m2[2][1] = 9;
+	ASSERT_NE(m1[0][0], m2[0][0]);
+	ASSERT_NE(m1[2][1], m2[2][1]);
 }
 
 TEST(TMatrix, can_get_size)
@@ -50,28 +56,41 @@ TEST(TMatrix, can_get_size)
 
 TEST(TMatrix, can_set_and_get_element)
 {
-//	TMatrix<int> m(5);
-//	ASSERT_ANY_THROW(m[0][0]=77);
+	TMatrix<int> m(5);
+	ASSERT_NO_THROW(m[0][0]=77);
+	EXPECT_EQ(77,m[0][0]);
 }
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)
 {
-	ADD_FAILURE();
+	TMatrix<int> m(5);
+	ASSERT_ANY_THROW(m[0][-1] = 77);
+	//ASSERT_ANY_THROW(m[-5][4] = 77);
 }
 
 TEST(TMatrix, throws_when_set_element_with_too_large_index)
 {
-	 ADD_FAILURE();
+	TMatrix<int> m(5);
+	//ASSERT_ANY_THROW(m[0][7] = 77);
+	ASSERT_ANY_THROW(m[9][2] = 77);
 }
 
 TEST(TMatrix, can_assign_matrix_to_itself)
 {
-  ADD_FAILURE();
+	TMatrix<int> m(5);
+	m[0][2] = 7; m[1][4] = 5; m[3][2] = 1;
+	TMatrix<int> m2(m);
+	ASSERT_NO_THROW(m = m); 
+	EXPECT_EQ(m2, m);
 }
 
 TEST(TMatrix, can_assign_matrices_of_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> m(5);
+	m[0][2] = 7; m[1][4] = 5; m[3][2] = 1;
+	TMatrix<int> m2(5);
+	ASSERT_NO_THROW(m2 = m);
+	EXPECT_EQ(m2, m);
 }
 
 TEST(TMatrix, assign_operator_change_matrix_size)
