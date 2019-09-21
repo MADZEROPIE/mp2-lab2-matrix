@@ -66,7 +66,7 @@ TVector<ValType>::TVector(int s, int si)
 	Size = s;
 	StartIndex = si;
 	pVector = new ValType[s];
-	for (int i = 0; i < s; ++i) pVector[i] = NULL;
+	for (int i = 0; i < s; ++i) pVector[i] = 0;
 } 
 
 template <class ValType> //конструктор копирования
@@ -250,7 +250,7 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 {
 	if (this != &mt) { 
 		TVector<TVector<ValType> >::StartIndex = mt.StartIndex;
-		if (Size != mt.Size) {
+		if (TVector<TVector<ValType> >::Size != mt.Size) {
 			delete[] TVector<TVector<ValType> >::pVector;
 			TVector<TVector<ValType> >::pVector = new TVector<ValType>[mt.Size];
 			TVector<TVector<ValType> >::Size = mt.Size;
