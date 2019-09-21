@@ -152,7 +152,7 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
 	if (Size != v.Size) throw exception();
 	TVector<ValType> res(*this);
-	for (int i = StartIndex; i < Size; ++i) res.pVector[i] *= val;// StartIndex or 0 ???
+	for (int i = StartIndex; i < Size; ++i) res.pVector[i] = pVector[i]+v.pVector[i];// StartIndex or 0 ???
 	return res;
 } 
 
@@ -161,7 +161,7 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
 	if (Size != v.Size) throw exception();
 	TVector<ValType> res(*this);
-	for (int i = StartIndex; i < Size; ++i) res.pVector[i] *= val;// StartIndex or 0 ???
+	for (int i = StartIndex; i < Size; ++i) res.pVector[i] = pVector[i]- v.pVector[i]// StartIndex or 0 ???
 	return res;
 } 
 
@@ -248,7 +248,7 @@ bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 template <class ValType> // присваивание
 TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 {
-	/*if (this != &mt) { // Даже с такой проверкой где-то выкидывается исключение
+	if (this != &mt) { 
 		StartIndex = mt.StartIndex;
 		if (Size != mt.Size) {
 			delete[] pVector;
@@ -256,24 +256,26 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 			Size = mt.Size;
 		}
 		for(int i=0;i<Size;++i) pVector[i] = mt.pVector[i];
-	}*/
-	TVector<TVector<ValType> >::operator=(mt);
+	}
+	//TVector<TVector<ValType> >::operator=(mt);
 	return *this;
 } 
 
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-	TMatrix<ValType> res(mt.Size > Size ? mt.Size : Size);
-	TVector<TVector<ValType> >::operator+(mt);
+	if (mt.Size != Size) throw exception();
+	TMatrix<ValType> res(Size);
+	for (int i = 0; i < Size; ++i) res.pVector[i] = mt.pVector[i]+pVector[i];
 	return res;
 } 
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
-	TMatrix<ValType> res(mt.Size > Size ? mt.Size : Size);
-	TVector<TVector<ValType> >::operator-(mt);
+	if (mt.Size != Size) throw exception();
+	TMatrix<ValType> res(Size);
+	for (int i = 0; i < Size; ++i) res.pVector[i] = mt.pVector[i] - pVector[i];
 	return res;
 } 
 
