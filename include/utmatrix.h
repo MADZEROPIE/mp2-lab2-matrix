@@ -161,7 +161,7 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
 	if (Size != v.Size) throw exception();
 	TVector<ValType> res(*this);
-	for (int i = StartIndex; i < Size; ++i) res.pVector[i] = pVector[i]- v.pVector[i]// StartIndex or 0 ???
+	for (int i = StartIndex; i < Size; ++i) res.pVector[i] = pVector[i] - v.pVector[i];// StartIndex or 0 ???
 	return res;
 } 
 
