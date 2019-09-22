@@ -1,1 +1,1 @@
-//Otherwise, it don't compiles (link error) (I'm well acknowleged that my English suck)
+//Otherwise, it doesn't compiles (link error) (I'm pretty acknowleged that my English sucks)
