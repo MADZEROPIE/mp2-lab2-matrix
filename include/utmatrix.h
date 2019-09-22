@@ -151,8 +151,8 @@ template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
 	if (Size != v.Size) throw exception();
-	TVector<ValType> res(*this);
-	for (int i = StartIndex; i < Size; ++i) res.pVector[i] = pVector[i]+v.pVector[i];// StartIndex or 0 ???
+	TVector<ValType> res(Size,StartIndex);
+	for (int i = 0; i < Size; ++i) res.pVector[i] = pVector[i]+v.pVector[i];// StartIndex or 0 ???
 	return res;
 } 
 
@@ -160,8 +160,8 @@ template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
 	if (Size != v.Size) throw exception();
-	TVector<ValType> res(*this);
-	for (int i = StartIndex; i < Size; ++i) res.pVector[i] = pVector[i] - v.pVector[i];// StartIndex or 0 ???
+	TVector<ValType> res(Size, StartIndex);
+	for (int i = 0; i < Size; ++i) res.pVector[i] = pVector[i] - v.pVector[i];// StartIndex or 0 ???
 	return res;
 } 
 
@@ -170,7 +170,7 @@ ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
 	if (Size != v.Size) throw exception();
 	ValType res=0;
-	for (int i = (StartIndex>v.StartIndex)? StartIndex: v.StartIndex; i < Size; ++i) res += v.pVector[i]*pVector[i];// StartIndex or 0 ???
+	for (int i = 0; i < Size; ++i) res += v.pVector[i]*pVector[i];// StartIndex or 0 ???
 	return res;
 } 
 
@@ -208,9 +208,10 @@ template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
 	if (s > MAX_MATRIX_SIZE || s < 0) throw exception();
-	//pVector = new TVector<ValType> [s];
-	TVector<ValType>  a(s);
-	for (int i = 0; i < s; ++i) TVector<TVector<ValType> >::pVector[i] = a;
+	for (int i = 0; i < s; ++i) {
+		TVector<ValType>  a(s,i); //Вынести за цикл, если не используется StartIndex
+		TVector<TVector<ValType> >::pVector[i] = a;
+	}
 } 
 
 template <class ValType> // конструктор копирования
@@ -275,7 +276,7 @@ TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
 	if (mt.Size != TVector<TVector<ValType> >::Size) throw exception();
 	TMatrix<ValType> res(TVector<TVector<ValType> >::Size);
-	for (int i = 0; i < TVector<TVector<ValType> >::Size; ++i) res.pVector[i] = mt.pVector[i] - TVector<TVector<ValType> >::pVector[i];
+	for (int i = 0; i < TVector<TVector<ValType> >::Size; ++i) res.pVector[i] = TVector<TVector<ValType> >::pVector[i]- mt.pVector[i];
 	return res;
 } 
 
