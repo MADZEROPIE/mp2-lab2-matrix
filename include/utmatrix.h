@@ -62,7 +62,7 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
-	if (s > MAX_VECTOR_SIZE||s<0||si<0||si>s) throw exception();
+	if (s > MAX_VECTOR_SIZE||s<0||si<0) throw exception();
 	Size = s;
 	StartIndex = si;
 	pVector = new ValType[s];
@@ -88,8 +88,8 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-	if (pos<0 || pos>Size) throw exception();
-	return pVector[pos];
+	if (pos<StartIndex || pos>=Size+StartIndex) throw exception();
+	return pVector[pos-StartIndex];
 } 
 
 template <class ValType> // сравнение
@@ -207,10 +207,9 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
-	if (s > MAX_MATRIX_SIZE || s < 0) throw exception();
+	if (s > MAX_MATRIX_SIZE) throw exception();
 	for (int i = 0; i < s; ++i) {
-		TVector<ValType>  a(s,i); //Вынести за цикл, если не используется StartIndex
-		TVector<TVector<ValType> >::pVector[i] = a;
+		TVector<TVector<ValType> >::pVector[i] = TVector<ValType>  (s - i, i);
 	}
 } 
 
@@ -265,19 +264,19 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-	if (mt.Size != TVector<TVector<ValType> >::Size) throw exception();
-	TMatrix<ValType> res(TVector<TVector<ValType> >::Size);
-	for (int i = 0; i < TVector<TVector<ValType> >::Size; ++i) res.pVector[i] = mt.pVector[i]+ TVector<TVector<ValType> >::pVector[i];
-	return res;
+	//if (mt.Size != TVector<TVector<ValType> >::Size) throw exception();
+	//TMatrix<ValType> res(TVector<TVector<ValType> >::Size);
+	//for (int i = 0; i < TVector<TVector<ValType> >::Size; ++i) res.pVector[i] = mt.pVector[i]+ TVector<TVector<ValType> >::pVector[i];
+	return TVector<TVector<ValType> >::operator+(mt);
 } 
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
-	if (mt.Size != TVector<TVector<ValType> >::Size) throw exception();
-	TMatrix<ValType> res(TVector<TVector<ValType> >::Size);
-	for (int i = 0; i < TVector<TVector<ValType> >::Size; ++i) res.pVector[i] = TVector<TVector<ValType> >::pVector[i]- mt.pVector[i];
-	return res;
+	//if (mt.Size != TVector<TVector<ValType> >::Size) throw exception();
+	//TMatrix<ValType> res(TVector<TVector<ValType> >::Size);
+	//for (int i = 0; i < TVector<TVector<ValType> >::Size; ++i) res.pVector[i] = TVector<TVector<ValType> >::pVector[i]- mt.pVector[i];
+	return TVector<TVector<ValType> >::operator-(mt);
 } 
 
 // TVector О3 Л2 П4 С6

@@ -41,11 +41,8 @@ TEST(TMatrix, copied_matrix_has_its_own_memory)
 	TMatrix<int> m1(5);
 	TMatrix<int> m2(m1);
 	m1[0][0] = 5;
-	m1[2][1] = 3;
 	m2[0][0] = 4;
-	m2[2][1] = 9;
 	ASSERT_NE(m1[0][0], m2[0][0]);
-	ASSERT_NE(m1[2][1], m2[2][1]);
 }
 
 TEST(TMatrix, can_get_size)
@@ -78,7 +75,7 @@ TEST(TMatrix, throws_when_set_element_with_too_large_index)
 TEST(TMatrix, can_assign_matrix_to_itself)
 {
 	TMatrix<int> m(5);
-	m[0][2] = 7; m[1][4] = 5; m[3][2] = 1;
+	m[0][2] = 7; m[1][4] = 5; 
 	TMatrix<int> m2(m);
 	ASSERT_NO_THROW(m = m); 
 	EXPECT_EQ(m2, m);
@@ -87,7 +84,7 @@ TEST(TMatrix, can_assign_matrix_to_itself)
 TEST(TMatrix, can_assign_matrices_of_equal_size)
 {
 	TMatrix<int> m(5);
-	m[0][2] = 7; m[1][4] = 5; m[3][2] = 1;
+	m[0][2] = 7; m[1][4] = 5; 
 	TMatrix<int> m2(5);
 	ASSERT_NO_THROW(m2 = m);
 	EXPECT_EQ(m2, m);
@@ -112,7 +109,7 @@ TEST(TMatrix, can_assign_matrices_of_different_size)
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
 	TMatrix<int> m(5),m2(5);
-	m2[0][2]=m[0][2] = 7;m2[1][4]= m[1][4] = 5;m2[3][2]= m[3][2] = 1;
+	m2[0][2]=m[0][2] = 7;m2[1][4]= m[1][4] = 5;
 	EXPECT_EQ(1, m == m);
 	EXPECT_EQ(0, m != m);
 }
