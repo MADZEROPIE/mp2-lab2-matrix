@@ -205,3 +205,18 @@ TEST(TVector, cant_multiply_vectors_with_not_equal_size)
 	ASSERT_ANY_THROW(v * v2);
 }
 
+TEST(TVector, operator_ne) {
+    const int n = 10, si = 3;
+    TVector<int> v1(n, si), v2(n, si);
+    v1[4] = 1;
+    v2[4] = 2;
+    ASSERT_TRUE(v1 != v2);
+}
+
+TEST(TVector, operator_eq) {
+    const int n = 10, si = 3;
+    TVector<int> v1(n, si), v2(n, si);
+    v1[4] = 1;
+    v2[4] = 2;
+    ASSERT_FALSE(v1 == v2);
+}
